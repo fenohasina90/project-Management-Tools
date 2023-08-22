@@ -26,7 +26,7 @@ public class ProjectDAO extends BasisDAO<Project>{
             preparedStatement.setDate(3,toInsert.getStartDate());
             preparedStatement.setDate(4,toInsert.getEndDate());
             preparedStatement.setTimestamp(5,toInsert.getCreatedAt());
-            preparedStatement.setTimestamp(5,toInsert.getUpdatedAt());
+            preparedStatement.setTimestamp(6,toInsert.getUpdatedAt());
 
             int rowsInserted = preparedStatement.executeUpdate();
             if (rowsInserted > 0){
