@@ -86,7 +86,22 @@ public class ProjectDAO extends BasisDAO<Project>{
 
     @Override
     public void update(Project toUpdate) throws SQLException {
+        String sql = "UPDATE \"user\" SET project_name = ?, description = ?, start_date = ?, end_date = ?,"+
+                "created_at = ?,updated_at = ? WHERE id_project = ?;";
 
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
+            preparedStatement.setString(1,toUpdate.getProjectName());
+            preparedStatement.setString(2,toUpdate.getDescription());
+            preparedStatement.setDate(3,toUpdate.getStartDate());
+            preparedStatement.setDate(4,toUpdate.getEndDate());
+            preparedStatement.setTimestamp(5,toUpdate.getCreatedAt());
+            preparedStatement.setTimestamp(6,toUpdate.getUpdatedAt());
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+            if (rowsUpdated > 0){
+                System.out.println("Updated with success!");
+            }
+        }
     }
 
     @Override
