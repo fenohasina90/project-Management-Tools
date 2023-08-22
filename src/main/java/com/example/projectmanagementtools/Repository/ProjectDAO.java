@@ -106,6 +106,15 @@ public class ProjectDAO extends BasisDAO<Project>{
 
     @Override
     public void delete(int id) throws SQLException {
+        String sql = "DELETE FROM  \"project\" WHERE id_project = ?;";
 
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
+            preparedStatement.setInt(1,id);
+
+            int rowsDeleted = preparedStatement.executeUpdate();
+            if (rowsDeleted > 0){
+                System.out.println("Deleted with success!");
+            }
+        }
     }
 }
