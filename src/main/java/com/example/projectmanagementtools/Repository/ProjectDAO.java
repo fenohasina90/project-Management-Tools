@@ -1,7 +1,6 @@
 package com.example.projectmanagementtools.Repository;
 
 import com.example.projectmanagementtools.Entity.Project;
-import com.example.projectmanagementtools.Entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
@@ -44,13 +43,13 @@ public class ProjectDAO extends BasisDAO<Project>{
              ResultSet resultSet = statement.executeQuery(sql)){
 
             while (resultSet.next()){
-                int id = resultSet.getInt("id");
-                String nameProject = resultSet.getString("nameProject");
-                String Description = resultSet.getString("Description");
-                Date StartDate = resultSet.getDate("StartDate");
-                Date endDate = resultSet.getDate("endDate");
-                Timestamp createdAt = resultSet.getTimestamp("createdAt");
-                Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
+                int id = resultSet.getInt(1);
+                String nameProject = resultSet.getString(2);
+                String Description = resultSet.getString(3);
+                Date StartDate = resultSet.getDate(4);
+                Date endDate = resultSet.getDate(5);
+                Timestamp createdAt = resultSet.getTimestamp(6);
+                Timestamp updatedAt = resultSet.getTimestamp(7);
 
                 Project project = new Project(id,nameProject,Description,StartDate,endDate,createdAt,updatedAt);
                 list.add(project);
@@ -67,13 +66,13 @@ public class ProjectDAO extends BasisDAO<Project>{
             preparedStatement.setInt(1,id);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
                 if (resultSet.next()){
-                    int idProject = resultSet.getInt("idProject");
-                    String projectName = resultSet.getString("projectName");
-                    String description = resultSet.getString("description");
-                    Date startDate = resultSet.getDate("startDate");
-                    Date endDate = resultSet.getDate("endDate");
-                    Timestamp createdAt = resultSet.getTimestamp("createdAt");
-                    Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
+                    int idProject = resultSet.getInt(1);
+                    String projectName = resultSet.getString(2);
+                    String description = resultSet.getString(3);
+                    Date startDate = resultSet.getDate(4);
+                    Date endDate = resultSet.getDate(5);
+                    Timestamp createdAt = resultSet.getTimestamp(6);
+                    Timestamp updatedAt = resultSet.getTimestamp(7);
 
                     Project project = new Project(idProject,projectName,description,startDate,endDate,createdAt,updatedAt);
                     return Optional.of(project);
@@ -86,7 +85,7 @@ public class ProjectDAO extends BasisDAO<Project>{
 
     @Override
     public void update(Project toUpdate) throws SQLException {
-        String sql = "UPDATE \"user\" SET project_name = ?, description = ?, start_date = ?, end_date = ?,"+
+        String sql = "UPDATE \"project\" SET project_name = ?, description = ?, start_date = ?, end_date = ?,"+
                 "created_at = ?,updated_at = ? WHERE id_project = ?;";
 
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
