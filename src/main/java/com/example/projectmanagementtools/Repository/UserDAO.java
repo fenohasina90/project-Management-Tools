@@ -26,7 +26,7 @@ public class UserDAO extends BasisDAO<User>{
     }
 
     @Override
-    public List<User> findAll() throws SQLException {
+    public List<User> findAll(){
         List<User> list = new ArrayList<>();
         String sql = "SELECT * FROM \"user\";";
 
@@ -51,6 +51,24 @@ public class UserDAO extends BasisDAO<User>{
 
     @Override
     public Optional<User> findById(int id) throws SQLException {
+        String sql = "SELECT * FROM \"user\" WHERE id_user = ?;";
+
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
+            preparedStatement.setInt(1,id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()){
+                    int idUser = resultSet.getInt("idUser");
+                    String userName = resultSet.getString("userName");
+                    String email = resultSet.getString("email");
+                    String password = resultSet.getString("password");
+                    Timestamp createdAt = resultSet.getTimestamp("createdAt");
+
+                    User user = new User(idUser,userName,email,password,createdAt);
+                    return Optional.of(user);
+                }
+            }
+
+        }
         return Optional.empty();
     }
 
