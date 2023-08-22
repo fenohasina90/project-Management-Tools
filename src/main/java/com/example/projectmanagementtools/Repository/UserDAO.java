@@ -38,11 +38,11 @@ public class UserDAO extends BasisDAO<User>{
              ResultSet resultSet = statement.executeQuery(sql)){
 
             while (resultSet.next()){
-                int id = resultSet.getInt("id");
-                String userName = resultSet.getString("userName");
-                String email = resultSet.getString("email");
-                String password = resultSet.getString("password");
-                Timestamp createdAt = resultSet.getTimestamp("createdAt");
+                int id = resultSet.getInt(1);
+                String userName = resultSet.getString(2);
+                String email = resultSet.getString(3);
+                String password = resultSet.getString(4);
+                Timestamp createdAt = resultSet.getTimestamp(5);
 
                 User user = new User(id,userName,email,password,createdAt);
                 list.add(user);
@@ -59,11 +59,11 @@ public class UserDAO extends BasisDAO<User>{
             preparedStatement.setInt(1,id);
             try (ResultSet resultSet = preparedStatement.executeQuery()){
                 if (resultSet.next()){
-                    int idUser = resultSet.getInt("idUser");
-                    String userName = resultSet.getString("userName");
-                    String email = resultSet.getString("email");
-                    String password = resultSet.getString("password");
-                    Timestamp createdAt = resultSet.getTimestamp("createdAt");
+                    int idUser = resultSet.getInt(1);
+                    String userName = resultSet.getString(2);
+                    String email = resultSet.getString(3);
+                    String password = resultSet.getString(4);
+                    Timestamp createdAt = resultSet.getTimestamp(5);
 
                     User user = new User(idUser,userName,email,password,createdAt);
                     return Optional.of(user);
