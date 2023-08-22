@@ -45,14 +45,14 @@ public class ProjectDAO extends BasisDAO<Project>{
 
             while (resultSet.next()){
                 int id = resultSet.getInt("id");
-                String projectName = resultSet.getString("projectName");
-                String description = resultSet.getString("description");
-                Date startDate = resultSet.getDate("startDate");
+                String nameProject = resultSet.getString("nameProject");
+                String Description = resultSet.getString("Description");
+                Date StartDate = resultSet.getDate("StartDate");
                 Date endDate = resultSet.getDate("endDate");
                 Timestamp createdAt = resultSet.getTimestamp("createdAt");
                 Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
 
-                Project project = new Project(id,projectName,description,startDate,endDate,createdAt,updatedAt);
+                Project project = new Project(id,nameProject,Description,StartDate,endDate,createdAt,updatedAt);
                 list.add(project);
             }
         }
@@ -61,6 +61,26 @@ public class ProjectDAO extends BasisDAO<Project>{
 
     @Override
     public Optional<Project> findById(int id) throws SQLException {
+        String sql = "SELECT * FROM \"project\" WHERE id_project = ?;";
+
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
+            preparedStatement.setInt(1,id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()){
+                if (resultSet.next()){
+                    int idProject = resultSet.getInt("idProject");
+                    String projectName = resultSet.getString("projectName");
+                    String description = resultSet.getString("description");
+                    Date startDate = resultSet.getDate("startDate");
+                    Date endDate = resultSet.getDate("endDate");
+                    Timestamp createdAt = resultSet.getTimestamp("createdAt");
+                    Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
+
+                    Project project = new Project(idProject,projectName,description,startDate,endDate,createdAt,updatedAt);
+                    return Optional.of(project);
+                }
+            }
+
+        }
         return Optional.empty();
     }
 
