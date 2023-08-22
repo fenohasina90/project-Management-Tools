@@ -21,18 +21,22 @@ public class UserDAO extends BasisDAO<User>{
             preparedStatement.setString(2,toInsert.getEmail());
             preparedStatement.setString(3,toInsert.getPassword());
             preparedStatement.setTimestamp(4,toInsert.getCreatedAt());
-            preparedStatement.executeUpdate();
+
+            int rowsInserted = preparedStatement.executeUpdate();
+            if (rowsInserted > 0){
+                System.out.println("Inserted with success!");
+            }
         }
     }
 
     @Override
-    public List<User> findAll(){
+    public List<User> findAll() throws SQLException{
         List<User> list = new ArrayList<>();
         String sql = "SELECT * FROM \"user\";";
 
-        try {
-            Statement statement = getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+        try (Statement statement = getConnection().createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)){
+
             while (resultSet.next()){
                 int id = resultSet.getInt("id");
                 String userName = resultSet.getString("userName");
@@ -43,8 +47,6 @@ public class UserDAO extends BasisDAO<User>{
                 User user = new User(id,userName,email,password,createdAt);
                 list.add(user);
             }
-        }catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }
@@ -74,7 +76,20 @@ public class UserDAO extends BasisDAO<User>{
 
     @Override
     public void update(User toUpdate) throws SQLException {
+        String sql = "UPDATE \"user\" SET user_name = ?, email = ?, password = ?, created_at = ?"+
+                " WHERE id_user = ?;";
 
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
+            preparedStatement.setString(1,toUpdate.getUserName());
+            preparedStatement.setString(2,toUpdate.getEmail());
+            preparedStatement.setString(3,toUpdate.getPassword());
+            preparedStatement.setTimestamp(4,toUpdate.getCreatedAt());
+
+            int rowsUpdated = preparedStatement.executeUpdate();
+            if (rowsUpdated > 0){
+                System.out.println("Updated with success!");
+            }
+        }
     }
 
     @Override
