@@ -14,7 +14,7 @@ public class UserDAO extends BasisDAO<User>{
 
     @Override
     public void insert(User toInsert) throws SQLException {
-        String sql = "INSERT INTO \"user\" (user_name,email,password,created_at) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO \"user\" (user_name,email,password,created_at) VALUES (?,?,?,?);";
 
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
             preparedStatement.setString(1, toInsert.getUserName());
@@ -27,7 +27,26 @@ public class UserDAO extends BasisDAO<User>{
 
     @Override
     public List<User> findAll() throws SQLException {
-        return null;
+        List<User> list = new ArrayList<>();
+        String sql = "SELECT * FROM \"user\";";
+
+        try {
+            Statement statement = getConnection().createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String userName = resultSet.getString("userName");
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                Timestamp createdAt = resultSet.getTimestamp("createdAt");
+
+                User user = new User(id,userName,email,password,createdAt);
+                list.add(user);
+            }
+        }catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     @Override
