@@ -1,11 +1,11 @@
 package com.example.projectmanagementtools.Repository;
 
 import com.example.projectmanagementtools.Entity.Project;
+import com.example.projectmanagementtools.Entity.User;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,7 +37,26 @@ public class ProjectDAO extends BasisDAO<Project>{
 
     @Override
     public List<Project> findAll() throws SQLException {
-        return null;
+        List<Project> list = new ArrayList<>();
+        String sql = "SELECT * FROM \"project\";";
+
+        try (Statement statement = getConnection().createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)){
+
+            while (resultSet.next()){
+                int id = resultSet.getInt("id");
+                String projectName = resultSet.getString("projectName");
+                String description = resultSet.getString("description");
+                Date startDate = resultSet.getDate("startDate");
+                Date endDate = resultSet.getDate("endDate");
+                Timestamp createdAt = resultSet.getTimestamp("createdAt");
+                Timestamp updatedAt = resultSet.getTimestamp("updatedAt");
+
+                Project project = new Project(id,projectName,description,startDate,endDate,createdAt,updatedAt);
+                list.add(project);
+            }
+        }
+        return list;
     }
 
     @Override
