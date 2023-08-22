@@ -113,6 +113,15 @@ public class TaskDAO extends BasisDAO<Task>{
 
     @Override
     public void delete(int id) throws SQLException {
+        String sql = "DELETE FROM  \"task\" WHERE id_task = ?;";
 
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
+            preparedStatement.setInt(1,id);
+
+            int rowsDeleted = preparedStatement.executeUpdate();
+            if (rowsDeleted > 0){
+                System.out.println("Deleted with success!");
+            }
+        }
     }
 }
