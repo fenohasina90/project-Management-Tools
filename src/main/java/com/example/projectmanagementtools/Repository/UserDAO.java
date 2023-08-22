@@ -94,6 +94,15 @@ public class UserDAO extends BasisDAO<User>{
 
     @Override
     public void delete(int id) throws SQLException {
+        String sql = "DELETE FROM  \"user\" WHERE id_user = ?;";
 
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
+            preparedStatement.setInt(1,id);
+
+            int rowsDeleted = preparedStatement.executeUpdate();
+            if (rowsDeleted > 0){
+                System.out.println("Deleted with success!");
+            }
+        }
     }
 }
