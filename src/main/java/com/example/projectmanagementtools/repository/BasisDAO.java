@@ -1,4 +1,4 @@
-package com.example.projectmanagementtools.Repository;
+package com.example.projectmanagementtools.repository;
 
 import java.sql.*;
 import java.util.List;

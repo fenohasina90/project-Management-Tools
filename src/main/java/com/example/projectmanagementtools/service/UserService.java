@@ -16,9 +16,9 @@ public class UserService {
     public User insert(User toInsert){
         try{
             this.userDAO.insert(toInsert);
-            return toInsert ;
+            return toInsert;
         }catch(SQLException e){
-            throw new RuntimeException("Error during the User insertion") ;
+            throw new RuntimeException("Error during the User insertion");
         }
     }
 
@@ -26,7 +26,7 @@ public class UserService {
         try{
             return userDAO.findAll();
         }catch (SQLException e){
-            throw new RuntimeException("Error during the getting all user");
+            throw new RuntimeException("Error during the all user getting");
         }
     }
 
@@ -34,7 +34,7 @@ public class UserService {
         try {
             return userDAO.findById(id);
         }catch (SQLException e){
-            throw new RuntimeException("Error during the getting an user by id"+ id);
+            throw new RuntimeException("Error during the user getting by id "+ id);
         }
     }
 
@@ -43,15 +43,15 @@ public class UserService {
             this.userDAO.update(toUpdate);
             return toUpdate;
         }catch (SQLException e){
-            throw  new RuntimeException("Error during the user updating" ) ;
+            throw new RuntimeException("Error during the user updating");
         }
     }
 
     public void deleteUser(int id){
         try{
             userDAO.delete(id);
-        }catch (SQLException e) {
-            throw new RuntimeException("Error during the deleting user by id "+ id, e);
+        }catch (SQLException e){
+            throw new RuntimeException("Error during the user deleting by id "+ id,e);
         }
     }
 }

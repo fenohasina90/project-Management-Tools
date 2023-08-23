@@ -1,4 +1,4 @@
-package com.example.projectmanagementtools.ConnectionDataBase;
+package com.example.projectmanagementtools.connectionDataBase;
 
 
 import org.springframework.beans.factory.annotation.Value;

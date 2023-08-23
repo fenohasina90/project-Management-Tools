@@ -27,7 +27,7 @@ public class ProjectService {
         try{
             return projectDAO.findAll();
         }catch (SQLException e){
-            throw new RuntimeException("Error during the getting all project");
+            throw new RuntimeException("Error during the all project getting");
         }
     }
 
@@ -35,7 +35,7 @@ public class ProjectService {
         try{
             return projectDAO.findById(id);
         }catch(SQLException e){
-            throw new RuntimeException("Error during the getting project by id"+ id);
+            throw new RuntimeException("Error during the project getting by id "+ id);
         }
     }
 
@@ -44,7 +44,7 @@ public class ProjectService {
             this.projectDAO.update(toUpdate);
             return toUpdate;
         }catch (SQLException e){
-            throw new RuntimeException("Error during the user updating");
+            throw new RuntimeException("Error during the project updating");
         }
     }
 
@@ -52,7 +52,7 @@ public class ProjectService {
         try {
             projectDAO.delete(id);
         } catch (SQLException e){
-            throw new RuntimeException("Error during the deleting user by id "+ id,e);
+            throw new RuntimeException("Error during the project deleting by id "+ id,e);
         }
     }
 }

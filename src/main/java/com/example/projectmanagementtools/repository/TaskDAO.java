@@ -1,6 +1,6 @@
-package com.example.projectmanagementtools.Repository;
+package com.example.projectmanagementtools.repository;
 
-import com.example.projectmanagementtools.Entity.Task;
+import com.example.projectmanagementtools.entity.Task;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
