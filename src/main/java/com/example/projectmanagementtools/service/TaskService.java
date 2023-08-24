@@ -23,7 +23,7 @@ public class TaskService {
         }
     }
 
-    public List<Task> findAllProject(){
+    public List<Task> findAllTask(){
         try{
             return taskDAO.findAll();
         }catch (SQLException e){
@@ -31,7 +31,7 @@ public class TaskService {
         }
     }
 
-    public Optional<Task> findContestById(int id){
+    public Optional<Task> findTaskById(int id){
         try{
             return taskDAO.findById(id);
         }catch(SQLException e){
@@ -39,7 +39,7 @@ public class TaskService {
         }
     }
 
-    public Task updateProject(Task toUpdate){
+    public Task updateTask(Task toUpdate){
         try{
             this.taskDAO.update(toUpdate);
             return toUpdate;
@@ -48,7 +48,7 @@ public class TaskService {
         }
     }
 
-    public void deleteProject(int id) {
+    public void deleteTask(int id) {
         try {
             taskDAO.delete(id);
         } catch (SQLException e){
