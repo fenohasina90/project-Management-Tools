@@ -88,7 +88,7 @@ public class TaskDAO extends BasisDAO<Task>{
     @Override
     public void update(Task toUpdate) throws SQLException {
         String sql = "UPDATE \"task\" SET task_name = ?, description = ?, deadline = ?, task_status = ?,"+
-                "created_at = ?,updated_at = ?, created_by = ?, for_project = ? WHERE id_project = ?;";
+                "created_at = ?,updated_at = ?, created_by = ?, for_project = ? WHERE id_task = ?;";
 
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
             preparedStatement.setString(1,toUpdate.getTaskName());
