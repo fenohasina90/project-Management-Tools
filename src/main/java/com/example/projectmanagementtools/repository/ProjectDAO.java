@@ -26,11 +26,7 @@ public class ProjectDAO extends BasisDAO<Project>{
             preparedStatement.setDate(4,toInsert.getEndDate());
             preparedStatement.setTimestamp(5,toInsert.getCreatedAt());
             preparedStatement.setTimestamp(6,toInsert.getUpdatedAt());
-
-            int rowsInserted = preparedStatement.executeUpdate();
-            if (rowsInserted > 0){
-                System.out.println("Inserted with success!");
-            }
+            preparedStatement.executeUpdate();
         }
     }
 
@@ -95,11 +91,8 @@ public class ProjectDAO extends BasisDAO<Project>{
             preparedStatement.setDate(4,toUpdate.getEndDate());
             preparedStatement.setTimestamp(5,toUpdate.getCreatedAt());
             preparedStatement.setTimestamp(6,toUpdate.getUpdatedAt());
-
-            int rowsUpdated = preparedStatement.executeUpdate();
-            if (rowsUpdated > 0){
-                System.out.println("Updated with success!");
-            }
+            preparedStatement.setInt(7,toUpdate.getId());
+            preparedStatement.executeUpdate();
         }
     }
 
@@ -109,11 +102,7 @@ public class ProjectDAO extends BasisDAO<Project>{
 
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
             preparedStatement.setInt(1,id);
-
-            int rowsDeleted = preparedStatement.executeUpdate();
-            if (rowsDeleted > 0){
-                System.out.println("Deleted with success!");
-            }
+            preparedStatement.executeUpdate();
         }
     }
 }
