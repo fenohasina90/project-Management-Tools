@@ -31,7 +31,7 @@ public class ProjectService {
         }
     }
 
-    public Optional<Project> findContestById(int id){
+    public Optional<Project> findProjectById(int id){
         try{
             return projectDAO.findById(id);
         }catch(SQLException e){
