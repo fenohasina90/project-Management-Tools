@@ -22,10 +22,7 @@ public class UserDAO extends BasisDAO<User>{
             preparedStatement.setString(3,toInsert.getPassword());
             preparedStatement.setTimestamp(4,toInsert.getCreatedAt());
 
-            int rowsInserted = preparedStatement.executeUpdate();
-            if (rowsInserted > 0){
-                System.out.println("Inserted with success!");
-            }
+            preparedStatement.executeUpdate();
         }
     }
 
@@ -84,11 +81,8 @@ public class UserDAO extends BasisDAO<User>{
             preparedStatement.setString(2,toUpdate.getEmail());
             preparedStatement.setString(3,toUpdate.getPassword());
             preparedStatement.setTimestamp(4,toUpdate.getCreatedAt());
-
-            int rowsUpdated = preparedStatement.executeUpdate();
-            if (rowsUpdated > 0){
-                System.out.println("Updated with success!");
-            }
+            preparedStatement.setInt(5 , toUpdate.getId());
+            preparedStatement.executeUpdate();
         }
     }
 
@@ -99,10 +93,7 @@ public class UserDAO extends BasisDAO<User>{
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
             preparedStatement.setInt(1,id);
 
-            int rowsDeleted = preparedStatement.executeUpdate();
-            if (rowsDeleted > 0){
-                System.out.println("Deleted with success!");
-            }
+            preparedStatement.executeUpdate();
         }
     }
 }
