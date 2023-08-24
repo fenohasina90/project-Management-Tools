@@ -32,11 +32,11 @@ public class ProjectController {
     }
 
     @PutMapping("/updateProject/{id}")
-    public Project updateProject(@PathVariable int id, @RequestBody Project updatedUser) {
-        if (updatedUser.getId() != id) {
+    public Project updateProject(@PathVariable int id, @RequestBody Project updateProject) {
+        if (updateProject.getId() != id) {
             throw new IllegalArgumentException("The ID provided in the request body does not match the ID in the path.");
         }
-        return this.projectService.updateProject(updatedUser);
+        return this.projectService.updateProject(updateProject);
     }
 
     @DeleteMapping("/deleteProject/{id}")
