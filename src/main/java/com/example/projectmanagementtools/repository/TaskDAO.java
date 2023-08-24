@@ -28,11 +28,7 @@ public class TaskDAO extends BasisDAO<Task>{
             preparedStatement.setTimestamp(6,toInsert.getUpdatedAt());
             preparedStatement.setInt(7,toInsert.getUserId());
             preparedStatement.setInt(8,toInsert.getProjectId());
-
-            int rowsInserted = preparedStatement.executeUpdate();
-            if (rowsInserted > 0){
-                System.out.println("Inserted with success!");
-            }
+            preparedStatement.executeUpdate();
         }
     }
 
@@ -103,11 +99,8 @@ public class TaskDAO extends BasisDAO<Task>{
             preparedStatement.setTimestamp(6,toUpdate.getUpdatedAt());
             preparedStatement.setInt(7,toUpdate.getUserId());
             preparedStatement.setInt(8,toUpdate.getProjectId());
-
-            int rowsUpdated = preparedStatement.executeUpdate();
-            if (rowsUpdated > 0){
-                System.out.println("Updated with success!");
-            }
+            preparedStatement.setInt(9,toUpdate.getId());
+            preparedStatement.executeUpdate();
         }
     }
 
@@ -117,11 +110,7 @@ public class TaskDAO extends BasisDAO<Task>{
 
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
             preparedStatement.setInt(1,id);
-
-            int rowsDeleted = preparedStatement.executeUpdate();
-            if (rowsDeleted > 0){
-                System.out.println("Deleted with success!");
-            }
+            preparedStatement.executeUpdate();
         }
     }
 }
