@@ -2,6 +2,7 @@ package com.example.projectmanagementtools.controller;
 
 import com.example.projectmanagementtools.entity.User;
 import com.example.projectmanagementtools.service.UserService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -35,6 +36,11 @@ public class UserController {
             throw new IllegalArgumentException("The ID provided in the request body does not match the ID in the path.");
         }
         return this.userService.updateUser(updatedUser);
+    }
+    @DeleteMapping("/deleteUser/{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable int id) {
+        userService.deleteUser(id);
+        return ResponseEntity.ok("Deleted with success");
     }
 
 }
