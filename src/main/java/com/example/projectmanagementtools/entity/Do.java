@@ -8,6 +8,7 @@ import lombok.*;
 @EqualsAndHashCode
 @ToString
 public class Do {
+    private int idDo;
     private int userId;
     private int projectId;
 }
