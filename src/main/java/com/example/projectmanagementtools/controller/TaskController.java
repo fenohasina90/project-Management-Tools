@@ -16,22 +16,22 @@ public class TaskController {
         this.taskService = taskService;
     }
 
-    @GetMapping("/allTask")
+    @GetMapping("/tasks")
     public List<Task> getAllTask(){
         return this.taskService.findAllTask();
     }
 
-    @GetMapping("/task/{id}")
+    @GetMapping("/tasks/{id}")
     public Optional<Task> getTaskById(@PathVariable int id){
         return this.taskService.findTaskById(id);
     }
 
-    @PostMapping("/addTask")
+    @PostMapping("/tasks")
     public Task insertTask(@RequestBody Task toInsert){
         return this.taskService.insert(toInsert);
     }
 
-    @PutMapping("/updateTask/{id}")
+    @PutMapping("/tasks/{id}")
     public Task updateTask(@PathVariable int id, @RequestBody Task updateTask) {
         if (updateTask.getId() != id) {
             throw new IllegalArgumentException("The ID provided in the request body does not match the ID in the path.");
@@ -39,7 +39,7 @@ public class TaskController {
         return this.taskService.updateTask(updateTask);
     }
 
-    @DeleteMapping("/deleteTask/{id}")
+    @DeleteMapping("/tasks/{id}")
     public ResponseEntity<String> deleteTask(@PathVariable int id) {
         taskService.deleteTask(id);
         return ResponseEntity.ok("Deleted with success");
