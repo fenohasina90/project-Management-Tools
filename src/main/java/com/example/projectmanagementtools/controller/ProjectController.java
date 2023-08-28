@@ -16,22 +16,22 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
-    @GetMapping("/allProject")
+    @GetMapping("/projects")
     public List<Project> getAllProject(){
         return this.projectService.findAllProject();
     }
 
-    @GetMapping("/project/{id}")
+    @GetMapping("/projects/{id}")
     public Optional<Project> getProjectById(@PathVariable int id){
         return this.projectService.findProjectById(id);
     }
 
-    @PostMapping("/addProject")
+    @PostMapping("/projects")
     public Project insertProject(@RequestBody Project toInsert){
         return this.projectService.insert(toInsert);
     }
 
-    @PutMapping("/updateProject/{id}")
+    @PutMapping("/projects/{id}")
     public Project updateProject(@PathVariable int id, @RequestBody Project updateProject) {
         if (updateProject.getId() != id) {
             throw new IllegalArgumentException("The ID provided in the request body does not match the ID in the path.");
@@ -39,7 +39,7 @@ public class ProjectController {
         return this.projectService.updateProject(updateProject);
     }
 
-    @DeleteMapping("/deleteProject/{id}")
+    @DeleteMapping("/projects/{id}")
     public ResponseEntity<String> deleteProject(@PathVariable int id) {
         projectService.deleteProject(id);
         return ResponseEntity.ok("Deleted with success");
