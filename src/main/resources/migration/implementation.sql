@@ -23,6 +23,7 @@ CREATE TABLE project(
 );
 
 CREATE TABLE "do"(
+    id_do SERIAL PRIMARY KEY,
     id_user INT REFERENCES "user"(id_user),
     id_project INT REFERENCES project(id_project)
 );
