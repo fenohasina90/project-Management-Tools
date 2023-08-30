@@ -1,0 +1,133 @@
+openapi: 3.0.3
+info:
+  title: Project Management Tools API
+  description: API endpoints for managing projects in the project management application.
+  version: 1.0.0
+  contact:
+    email: hei.fenohasina@gmail.com
+servers:
+  - url: https://localhost:8080
+tags:
+  - name: Project Management
+    description: Endpoints for managing projects
+
+paths:
+  /projects:
+    get:
+      tags:
+        - Project Management
+      summary: Get a list of all projects
+      responses:
+        '200':
+          description: List of projects
+          content:
+            application/json:
+              example: |
+                [
+                  {
+                    "id": 1,
+                    "projectName": "Project A",
+                    "description": "Description of Project A",
+                    "createdAt": "2023-08-30T12:34:56Z"
+                  }
+                ]
+    post:
+      tags:
+        - Project Management
+      summary: Create a new project
+      requestBody:
+        description: Project data to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        '200':
+          description: Created project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+
+  /projects/{id}:
+    get:
+      tags:
+        - Project Management
+      summary: Get a project by ID
+      parameters:
+        - in: path
+          name: id
+          description: Project ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Project details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          description: Project not found
+    put:
+      tags:
+        - Project Management
+      summary: Update an existing project
+      parameters:
+        - in: path
+          name: id
+          description: Project ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Updated project data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        '200':
+          description: Updated project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          description: Invalid request
+    delete:
+      tags:
+        - Project Management
+      summary: Delete a project by ID
+      parameters:
+        - in: path
+          name: id
+          description: Project ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Project deleted
+        '404':
+          description: Project not found
+
+components:
+  schemas:
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+        projectName:
+          type: string
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+
