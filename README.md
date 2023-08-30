@@ -65,3 +65,8 @@ The Project Tools API can be accessed at `http://localhost:8080`.
 -  `POST /do`: Inserts a new user-project relationship using the provided data.
 -  `PUT /do/{id}`: Updates the user-project relationship corresponding to the specified ID using the provided data.
 -  `DELETE /do/{id}`: Deletes the user-project relationship corresponding to the specified ID.
+
+
+## URL to get Swagger UI
+
+https://petstore.swagger.io/?url=https://raw.githubusercontent.com/fenohasina90/project-Management-Tools/main/src/main/resources/ProjectManagementToolsAPI/API.yml
