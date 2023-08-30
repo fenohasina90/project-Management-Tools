@@ -1,0 +1,555 @@
+openapi: 3.0.3
+info:
+  title: Project Management Tools API
+  description: API endpoints for managing users, projects, tasks and Do relation in the project management application.
+  version: 1.0.0
+  contact:
+    email: hei.fenohasina@gmail.com
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: User Management
+    description: Endpoints for managing users
+  - name: Project Management
+    description: Endpoints for managing projects
+  - name: Task Management
+    description: Endpoints for managing tasks
+  - name: Do relation Management
+    description: Endpoints for managing Do relation
+
+paths:
+  /users:
+    get:
+      tags:
+        - User Management
+      summary: Get a list of all users
+      responses:
+        '200':
+          description: List of users
+          content:
+            application/json:
+              example: |
+                [
+                  {
+                    "id": 1,
+                    "userName": "john_doe",
+                    "email": "john@example.com",
+                    "password": "hashedPassword",
+                    "createdAt": "2023-08-30T12:34:56Z"
+                  },
+                  {
+                    "id": 2,
+                    "userName": "Mary Jane",
+                    "email": "mary@gmail.com",
+                    "password": "hashed12",
+                    "createdAt": "2023-08-30T12:34:56Z"
+                  }
+                ]
+    
+    post:
+      tags:
+        - User Management
+      summary: Create a new user
+      requestBody:
+        description: User data to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Created user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /users/{id}:
+    get:
+      tags:
+        - User Management
+      summary: Get a user by ID
+      parameters:
+        - in: path
+          name: id
+          description: User ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+    
+    put:
+      tags:
+        - User Management
+      summary: Update an existing user
+      parameters:
+        - in: path
+          name: id
+          description: User ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Updated user data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Updated user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid request
+    
+    delete:
+      tags:
+        - User Management
+      summary: Delete a user by ID
+      parameters:
+        - in: path
+          name: id
+          description: User ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: User deleted
+        '404':
+          description: User not found
+
+  /projects:
+    get:
+      tags:
+        - Project Management
+      summary: Get a list of all projects
+      responses:
+        '200':
+          description: List of projects
+          content:
+            application/json:
+              example: |
+                [
+                  {
+                    "id": 1,
+                    "projectName": "Project A",
+                    "description": "Description of Project A",
+                    "startDate":"2023-09-01",
+                    "endDate":"2023-12-15",
+                    "createdAt": "2023-08-30T12:34:56Z",
+                    "updatedAt": "2023-08-30T12:34:56Z"
+                  },
+                  {
+                    "id": 2,
+                    "projectName": "Project B",
+                    "description": "Description of Project B",
+                    "startDate":"2023-09-01",
+                    "endDate":"2023-12-15",
+                    "createdAt": "2023-08-30T12:34:56Z",
+                    "updatedAt": "2023-08-30T12:34:56Z"
+                  }
+                ]
+    
+    post:
+      tags:
+        - Project Management
+      summary: Create a new project
+      requestBody:
+        description: Project data to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        '200':
+          description: Created project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+  /projects/{id}:
+    get:
+      tags:
+        - Project Management
+      summary: Get a project by ID
+      parameters:
+        - in: path
+          name: id
+          description: Project ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Project details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          description: Project not found
+    
+    put:
+      tags:
+        - Project Management
+      summary: Update an existing project
+      parameters:
+        - in: path
+          name: id
+          description: Project ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Updated project data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+      responses:
+        '200':
+          description: Updated project
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '400':
+          description: Invalid request
+    
+    delete:
+      tags:
+        - Project Management
+      summary: Delete a project by ID
+      parameters:
+        - in: path
+          name: id
+          description: Project ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Project deleted
+        '404':
+          description: Project not found
+  
+  /tasks:
+    get:
+      tags:
+        - Task Management
+      summary: Get a list of all tasks
+      responses:
+        '200':
+          description: List of tasks
+          content:
+            application/json:
+              example: |
+                [
+                  {
+                    "id": 1,
+                    "taskName": "Task A",
+                    "description": "Description of Task A",
+                    "deadline": "2023-08-30",
+                    "taskStatus":"In progress",
+                    "createdAt": "2023-07-30T12:34:56Z",
+                    "updatedAt": "2023-07-30T12:34:56Z",
+                    "userId": 1,
+                    "projectId": 1
+                  },
+                  {
+                    "id": 2,
+                    "taskName": "Task B",
+                    "description": "Description of Task B",
+                    "deadline": "2023-08-30",
+                    "taskStatus":"Waiting",
+                    "createdAt": "2023-07-30T12:34:56Z",
+                    "updatedAt": "2023-07-30T12:34:56Z",
+                    "userId": 2,
+                    "projectId": 2
+                  }
+                ]
+    
+    post:
+      tags:
+        - Task Management
+      summary: Create a new task
+      requestBody:
+        description: Task data to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        '200':
+          description: Created task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+  /tasks/{id}:
+    get:
+      tags:
+        - Task Management
+      summary: Get a task by ID
+      parameters:
+        - in: path
+          name: id
+          description: Task ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Task details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '404':
+          description: Task not found
+    
+    put:
+      tags:
+        - Task Management
+      summary: Update an existing task
+      parameters:
+        - in: path
+          name: id
+          description: Task ID
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Updated task data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        '200':
+          description: Updated task
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Invalid request
+    
+    delete:
+      tags:
+        - Task Management
+      summary: Delete a task by ID
+      parameters:
+        - in: path
+          name: id
+          description: Task ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Task deleted
+        '404':
+          description: Task not found
+  
+  
+  /do:
+    get:
+      tags:
+        - "Do relation Management"
+      summary: Get a list of all Do relations
+      responses:
+        '200':
+          description: Successful response with a list of Do relations
+          content:
+            application/json:
+              example: |
+                [
+                  {
+                    "idDo": 1,
+                    "userId": 1,
+                    "projectId": 1
+                  },
+                  {
+                    "idDo": 2,
+                    "userId": 2,
+                    "projectId": 2
+                  }
+                ]
+    
+    post:
+      tags:
+        - "Do relation Management"
+      summary: Create a new Do relation
+      requestBody:
+        description: Do relation data to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Do'
+      responses:
+        '200':
+          description: Successful response with the created Do relation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Do'
+  /do/{id}:
+    get:
+      tags:
+        - "Do relation Management"
+      summary: Get a Do relation by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the Do relation to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response with the Do relation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Do'
+        '404':
+          description: Do relation not found
+    
+    put:
+      tags:
+        - "Do relation Management"
+      summary: Update a Do relation by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the Do relation to update
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: Updated Do relation data
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Do'
+      responses:
+        '200':
+          description: Successful response with the updated Do relation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Do'
+        '400':
+          description: Invalid request
+    
+    delete:
+      tags:
+        - "Do relation Management"
+      summary: Delete a Do relation by ID
+      parameters:
+        - name: id
+          in: path
+          description: ID of the Do relation to delete
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Successful response indicating deletion success
+        '404':
+          description: Task not found
+
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        userName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    
+    Project:
+      type: object
+      properties:
+        id:
+          type: integer
+        projectName:
+          type: string
+        description:
+          type: string
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+
+    Task:
+      type: object
+      properties:
+        id:
+          type: integer
+        taskName:
+          type: string
+        description:
+          type: string
+        deadline:
+          type: string
+          format: date
+        taskStatus:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        userId:
+          type: integer
+        projectId:
+          type: integer
+
+    Do:
+      type: object
+      properties:
+        idDo:
+          type: integer
+        userId:
+          type: integer
+        projectId:
+          type: integer
